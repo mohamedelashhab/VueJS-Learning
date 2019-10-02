@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vuejs</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <p v-once>{{title}}</p>
+        
+        <input type="text"  v-on:input="getTitle">
+
+        <a v-bind:href="link">Google</a>
+        
+        <hr>
+
+        <!-- render as html element -->
+        <div v-html="finishedLink"></div>
+
+        <!-- click button counter -->
+        <button v-on:click="clickable">Count</button> <input type="text" disabled v-bind:value="counter">
+
+        <!-- mouse coordinates -->
+        <p v-on:mousemove="updatecoordinate">Coordinate {{x}} / {{y}}</p>
+
+        <!-- passing arguments -->
+        <button v-on:click="getNumber(2, $event)">Number</button> <input type="text" disabled v-bind:value="number">
+
+        <!-- stop propgation and prevent default of event -->
+        <p v-on:mousemove="updatecoordinate">Coordinate {{x}} / {{y}}
+            <span v-on:mousemove.stop.prevent>dpan lorem ipsum</span>
+        </p>
+
+        <!-- keyboard event listener -->
+        <input type="text" v-on:keyup.enter.space.n="alertMe()">
+
+        <!-- two way databinding -->
+        <p></p><input type="text" v-model="name"> {{name}}
+
+        <!-- computed property contains methods that won't run every time vue render the template but compile if it's dependencies changed -->
+        <p><button v-on:click="counter2++">increaseCounter2</button></p>
+        {{output}} | {{counter2}}
+        <!--this bad way <p>{{result()}}</p> because it will be rendered every time vue render template when any property changed-->
+        
+
+    </div>
+
+
+
+
+
+
+    <script>
+        new Vue({
+            el:'#app',
+            data: {
+            title: "hello world !",
+            link: "http://www.google.com",
+            finishedLink: "<a href='http://www.google.com'>finish</a>",
+            counter: 0,
+            x:0,
+            y:0,
+            number:0,
+            name,
+            counter2:0,
+            },
+            computed: {
+                output: function(){
+                    console.log("fired")
+                    this.counter2++;
+                },
+            },
+            methods: {
+                helloWorld: function(){
+                    return this.title;
+                },
+                getTitle: function(event){
+                    this.title =  event.target.value;
+                },
+                clickable: function(event){
+                    this.counter++;
+                },
+                updatecoordinate: function(event){
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                },
+                getNumber: function(number, event){
+                    this.number = number;
+                    setTimeout(function(){
+                        alert(event.clientX);
+                    },1000);
+                },
+                alertMe: function(){
+                    alert('alet me');
+                },
+                result: function(){
+                    this.counter2++;
+                }
+                
+            }
+        });
+        
+        
+    </script>
+</body>
+</html>
