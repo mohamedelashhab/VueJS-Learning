@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Conditional & lists</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    
+
+    <div id="app">
+        
+        <p v-if="show"> Now you see me ! </p>  <!-- v-if it detach element and its elements from the DOM -->
+
+        <p v-show="show">Now you can see me or hidden me in the dom without detach me</p> <!-- v-show it style element with display:none -->
+        
+
+        <button @click="show = !show">Show</button>
+
+
+        <!-- v-for  -->
+        <ul>
+            <li v-for="(item, index) in list">{{item}}({{index+1}})</li>
+        </ul>
+
+        <!-- loop through objects -->
+        <ul>
+            <li v-for="(obj, index) in list_obj">
+                <ul>
+                    <li v-for="(value, key, index) in obj"> {{index+1}} - {{key}} : {{value}} </li> <!--loop through object properties-->
+                </ul>
+            </li>
+        </ul>
+
+        <!-- loop through number  -->
+        <span v-for="num in 10">{{num}} </span>
+
+        <!-- v-for key  -->
+        <ul>
+            <li v-for="(item, index) in list" :key="index">{{item}}({{index+1}})</li>
+        </ul>
+        <button @click="list.push('four')">push</button>
+
+    </div>
+    
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                show: false,
+                list: ['one', 'two', 'three'],
+                list_obj: [
+                    {name: "one", age: 27},
+                    {name: "two", age: 28},
+                    {name: "three", age: 29},
+                ],
+            }
+        });    
+    </script>
+</body>
+</html>
