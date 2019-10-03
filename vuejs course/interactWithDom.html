@@ -6,7 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vuejs</title>
     <script src="vue.js"></script>
+
+    <style>
+        .red{
+            background-color: red;
+        }
+
+        .blue{
+            background-color: blue;
+        }
+    </style>
 </head>
+
+
 <body>
     
     <div id="app">
@@ -47,14 +59,23 @@
         <!--this bad way <p>{{result()}}</p> because it will be rendered every time vue render template when any property changed-->
         
 
+        <!-- attach class to html -->
+        <div @click="colorFlag = !colorFlag" :class="{red: colorFlag}">div</div>
+        <div :class="[color, {red: colorFlag}]">div2</div>
+        <div :class="[{red: colorFlag}, color]">div3</div>
+        <div :style="styleObj">style your div</div>
+        <div :style="[styleObj, {height: width + 'px'}]"></div>
+
+        <hr>
+        <input type="text" v-model="color">
+        <input type="text" v-model="width">
+
     </div>
 
 
 
-
-
-
     <script>
+
         new Vue({
             el:'#app',
             data: {
@@ -67,12 +88,21 @@
             number:0,
             name,
             counter2:0,
+            colorFlag : false,
+            color: 'red',
+            width: '100px',
             },
             computed: {
                 output: function(){
-                    console.log("fired")
+                    console.log("fired");
                     this.counter2++;
                 },
+                styleObj: function(){
+                    return {
+                        backgroundColor: this.color,
+                        width: this.width + 'px',
+                    }
+                }
             },
             methods: {
                 helloWorld: function(){
@@ -99,11 +129,9 @@
                 },
                 result: function(){
                     this.counter2++;
-                }
-                
+                } 
             }
         });
-        
         
     </script>
 </body>
